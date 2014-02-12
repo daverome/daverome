@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Ember Starter Kit</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <script type="text/x-handlebars">
+    <nav>
+        <ul>
+            <li>
+                {{#link-to 'index'}}Home{{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'about'}}About{{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'contact'}}Contact{{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'items'}}Items{{/link-to}}
+            </li>
+        </ul>
+    </nav>
+
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="index">
+    <h2>Home</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </script>
+
+  <script type="text/x-handlebars" id="about">
+    <h2>About</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </script>
+
+  <script type="text/x-handlebars" id="contact">
+    <h2>Contact</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </script>
+
+  <script type="text/x-handlebars" id="items">
+    <h2>Items</h2>
+    {{#each model}}
+        <p>
+            {{#link-to 'item' this}}
+                {{name}}
+            {{/link-to}}
+        </p>
+    {{/each}}
+    <div>
+        {{outlet}}
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="item">
+    <h3>{{name}}</h3>
+  </script>
+
+  <script src="js/libs/jquery-1.10.2.js"></script>
+  <script src="js/libs/handlebars-1.1.2.js"></script>
+  <script src="js/libs/ember-1.3.2.js"></script>
+  <script src="js/libs/ember-data.prod.js"></script>
+
+  <script src="js/app.js"></script>
+  <!-- to activate the test runner, add the "?test" query string parameter -->
+  <script src="tests/runner.js"></script>
+</body>
+</html>

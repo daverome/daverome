@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^items$ /items.php [L]
+RewriteRule ^items/(.*)$ /items.php?id=$1
+</IfModule>
