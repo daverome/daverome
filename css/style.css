@@ -2,3 +2,31 @@
 .ember-application {
     margin: 20px;
 }
+
+
+.container {
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 960px;
+}
+
+.nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.nav li {
+    display: inline-block;
+}
+
+
+.item-list {
+    float: left;
+    width: 50%;
+}
+
+.item-detail {
+    float: right;
+    padding-top: 48px;
+    width: 50%;
+}

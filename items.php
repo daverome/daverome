@@ -1,27 +1,62 @@
 <?php
-/*
- * Fake API for routes
- * /items
- * /items/item_id
- */
+require_once( 'inc/db.php' );
 
-$id = (int) (isset( $_GET['id']) ? trim(strip_tags($_GET['id'])) : '' ) ;
+$id         = (int) (isset( $_GET['id']) ? trim(strip_tags($_GET['id'])) : '' ) ;
+$is_POST    = $_SERVER['REQUEST_METHOD']  === 'POST';
+$is_PUT     = $_SERVER['REQUEST_METHOD']  === 'PUT';
+$is_DELETE  = $_SERVER['REQUEST_METHOD']  === 'DELETE';
+$is_GET     = !$is_POST && !$is_PUT && !$is_DELETE;
 
-$items = array(
-    'items' => array(
-        array('id' => 1, 'name' => 'Item 1'),
-        array('id' => 2, 'name' => 'Item 2'),
-        array('id' => 3, 'name' => 'Item 3'),
-        array('id' => 4, 'name' => 'Item 4')
-    )
-);
+//***************************************************************************
+// GET /items
+//***************************************************************************
+if ( $is_GET && !$id ) {
+    //echo 'GET /items';
+    $items = readItem();
+    echo json_encode( array( 'items' => $items ) );
+}
 
-if ( $id ) {
-    foreach( $items['items'] as $item ) {
-        if( $item['id'] == $id ) {
-            $items = $item;
-            break;
+
+//***************************************************************************
+// GET /items/id
+//***************************************************************************
+if ( $is_GET && $id ) {
+    //echo 'GET /items/id';
+    $item = readItem( $id );
+    echo json_encode( $item );
+}
+
+
+//***************************************************************************
+// POST /items
+//***************************************************************************
+if ( $is_POST && !$id ) {
+    $json = file_get_contents("php://input");
+    if( $json ) {
+        $data = json_decode( $json );
+        if( $data && $data->item->name ) {
+            createItem( $data->item->name );
         }
     }
 }
-echo json_encode( $items );
+
+//***************************************************************************
+// PUT /items/id
+//***************************************************************************
+if ( $is_PUT && $id ) {
+    $json = file_get_contents("php://input");
+    if( $json ) {
+        $data = json_decode( $json );
+
+        if( $data && $data->item->name ) {
+            updateItem( $data->item->name, $id  );
+        }
+    }
+}
+
+//***************************************************************************
+// DELETE /items/id
+//***************************************************************************
+if ( $is_DELETE && $id ) {
+    deleteItem($id);
+}

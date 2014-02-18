@@ -8,24 +8,30 @@
 </head>
 <body>
   <script type="text/x-handlebars">
-    <nav>
-        <ul>
-            <li>
-                {{#link-to 'index'}}Home{{/link-to}}
-            </li>
-            <li>
-                {{#link-to 'about'}}About{{/link-to}}
-            </li>
-            <li>
-                {{#link-to 'contact'}}Contact{{/link-to}}
-            </li>
-            <li>
-                {{#link-to 'items'}}Items{{/link-to}}
-            </li>
-        </ul>
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li>
+                    {{#link-to 'index'}}Home{{/link-to}}
+                </li>
+                <li>
+                    {{#link-to 'about'}}About{{/link-to}}
+                </li>
+                <li>
+                    {{#link-to 'contact'}}Contact{{/link-to}}
+                </li>
+                <li>
+                    {{#link-to 'items'}}Items{{/link-to}}
+                </li>
+            </ul>
+        </div>
     </nav>
 
-    {{outlet}}
+    <div class="">
+        <div class="container">
+            {{outlet}}
+        </div>
+    </div>
   </script>
 
   <script type="text/x-handlebars" id="index">
@@ -43,28 +49,57 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
   </script>
 
+
   <script type="text/x-handlebars" id="items">
-    <h2>Items</h2>
-    {{#each model}}
-        <p>
-            {{#link-to 'item' this}}
-                {{name}}
-            {{/link-to}}
-        </p>
-    {{/each}}
+
     <div>
+        <h3>Add New Item</h3>
+        {{input type="text" value=newItem}}
+        <button {{action 'addItem'}}>Add</button>
+    </div>
+
+    <div class="item-list">
+        <h2>Items ( {{itemCount}} )</h2>
+        {{#each model}}
+            <p>
+                {{#link-to 'item' this}}
+                    {{name}}
+                {{/link-to}}
+            </p>
+        {{/each}}
+    </div>
+    <div class="item-detail">
         {{outlet}}
     </div>
   </script>
 
+  <script type="text/x-handlebars" id="items/add">
+
+  </script>
+
   <script type="text/x-handlebars" id="item">
     <h3>{{name}}</h3>
+    <h6>{{format-date added}}</h6>
+    {{#if isEditing}}
+        {{partial 'item/edit'}}
+        <button {{action 'saveItem'}}>Submit</button>
+        <button {{action 'cancelEdit'}}>Cancel</button>
+    {{else}}
+        <button {{action 'editItem'}}>Edit</button>
+
+        <button {{action 'removeItem'}}>Delete</button>
+    {{/if}}
+  </script>
+
+  <script type="text/x-handlebars" id="item/_edit">
+    <p>{{input type="text" value=name}}</p>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
   <script src="js/libs/ember-1.3.2.js"></script>
   <script src="js/libs/ember-data.prod.js"></script>
+  <script src="js/libs/moment.min.js"></script>
 
   <script src="js/app.js"></script>
 </body>
